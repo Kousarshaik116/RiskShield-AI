@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import joblib
 import pandas as pd
 import os
@@ -7,6 +7,9 @@ from datetime import datetime
 from simulate_transactions import run_simulation
 
 app = Flask(__name__)
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 
 # Load trained AI model
 model = joblib.load("model/risk_model.pkl")
